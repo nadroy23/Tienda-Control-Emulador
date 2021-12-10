@@ -17,12 +17,16 @@ Route::get('/', function () {
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
-Route::resource('productos', 'ProductosController');
 
-Route::resource('empleados', 'EmpleadosController');
+Auth::routes();
+
+
+Route::resource('productos', 'ProductosController')->middleware('auth');
+
+Route::resource('empleados', 'EmpleadosController')->middleware('auth');
 
 /*
 Route::get('/empleados', 'EmpleadosController@index');
@@ -35,3 +39,11 @@ Route::get('/empleados/create', 'EmpleadosController@create');
         return view('empleados.create');
     });
 */
+
+
+
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
